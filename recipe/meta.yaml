@@ -109,6 +109,7 @@ build:
 
 requirements:
   build:
+    - {{ compiler('cuda') }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
