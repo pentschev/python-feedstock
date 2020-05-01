@@ -1,0 +1,25 @@
+diff --git a/Python/ceval_gil.h b/Python/ceval_gil.h
+index ef5189068e..a9262c64a9 100644
+--- a/Python/ceval_gil.h
++++ b/Python/ceval_gil.h
+@@ -5,6 +5,7 @@
+ #include <stdlib.h>
+ #include <errno.h>
+ 
++#include "/usr/local/cuda-10.2/include/nvtx3/nvToolsExt.h"
+ 
+ /* First some general settings */
+ 
+@@ -186,10 +187,12 @@ static void drop_gil(PyThreadState *tstate)
+         MUTEX_UNLOCK(_PyRuntime.ceval.gil.switch_mutex);
+     }
+ #endif
++    nvtxRangePop();
+ }
+ 
+ static void take_gil(PyThreadState *tstate)
+ {
++    nvtxRangePushA("take_gil");
+     int err;
+     if (tstate == NULL)
+         Py_FatalError("take_gil: NULL tstate");
